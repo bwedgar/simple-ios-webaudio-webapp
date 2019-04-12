@@ -3,25 +3,48 @@
 <html>
 
 <head>
+  <style>
+    body {
+      background-color: black;
+      color: red;
+      font-family: verdana;
+      font-size: 120%;
+    }
 
+    .button {
+      background-color: black;
+      color: red;
+      font-family: verdana;
+      font-size: 7vw;
+      border: 1px solid red;
+      padding: 2% 2%;
+      text-align: left;
+    }
+  </style>
 
 </head>
 
 <body>
-<button onclick="oscillator.start();">play</button>
+  <button onclick="play(1)" class="button">play</button>
+  <button onclick="play(0)" class="button">stop</button>
   <script>
- 
-  var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  var oscillator = audioCtx.createOscillator();
-  var gainNode = audioCtx.createGain();
-  oscillator.connect(gainNode); 
-  gainNode.connect(audioCtx.destination);
-  oscillator.type = 'sine'; 
-  oscillator.frequency.value = 300;
-  gainNode.gain.value = 7.5;
-</script>
-
-
+    setupDone = false
+    var gainNode
+    play = (gain1) => {
+      if (!setupDone) {
+        setupDone = true
+        var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+        var oscillator = audioCtx.createOscillator();
+        gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.type = 'sine';
+        oscillator.frequency.value = 440
+        oscillator.start(0)
+      }
+        gainNode.gain.value = gain1
+    }
+  </script>
 
 </body>
 
