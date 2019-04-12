@@ -4,82 +4,17 @@
 
 <head>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="apple-touch-icon" href="launch.png">
-  <link rel="apple-touch-startup-image" href="launch.png">
-  <meta name="apple-mobile-web-app-title" content="Push To Telescope">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <style>
-    body {
-      background-color: black;
-      color: red;
-      font-family: verdana;
-      font-size: 120%;
-    }
-    .button {
-      background-color: black;
-      color: red;
-      font-family: verdana;
-      font-size: 7vw;
-      border: 1px solid red;
-      padding: 2% 2%;
-      text-align: left;
-    }
-  </style>
+</head>
 
+<body>
+
+
+  <button id="play" class="button">play sound</button><br>
+  <button id="stop" class="button">stop sound</button><br>
   <script>
-    function ready() {
-      class Note {
-        constructor(frequencyStart, frequencyEnd, duration) {
-          this.frequencyStart = frequencyStart;
-          this.frequencyEnd = frequencyEnd;
-          this.duration = duration;
-        }
-      }
-      seagull = [];
-      seagull.push(new Note(1570, 2200, 50));
-      // seagull.push(new Note(0, 0, 600));
-      seagull.push(new Note(2200, 1200, 50));
-      seagull.push(new Note(0, 0, 500));
-      seagull.push(new Note(1570, 2200, 50));
-      // seagull.push(new Note(0, 0, 600));
-      seagull.push(new Note(2200, 1200, 50));
-      seagull.push(new Note(0, 0, 500));
-      seagull.push(new Note(1570, 2200, 50));
-      // seagull.push(new Note(0, 0, 600));
-      seagull.push(new Note(2200, 1200, 50));
-      seagull.push(new Note(0, 0, 500));
-      seagull.push(new Note(1570, 2200, 50));
-      // seagull.push(new Note(0, 0, 600));
-      seagull.push(new Note(2200, 1200, 50));
-      seagull.push(new Note(0, 0, 500));
-      seagull.push(new Note(1570, 2200, 50));
-      // seagull.push(new Note(0, 0, 600));
-      seagull.push(new Note(2200, 1200, 50));
-      seagull.push(new Note(0, 0, 500));
-      // seagull.push(new Note(2200, 1400, 200));
-      //warble
-      // upperWarble = 1540;
-      // lowerWarble = 1300;
-      // quarterWarble = 150;
-      // seagull.push(new Note(upperWarble, lowerWarble, quarterWarble));
-      // seagull.push(new Note(lowerWarble, upperWarble, quarterWarble));
-      // seagull.push(new Note(upperWarble, lowerWarble, quarterWarble));
-      // seagull.push(new Note(lowerWarble, upperWarble, quarterWarble));
-      // seagull.push(new Note(upperWarble, lowerWarble, quarterWarble));
-      // seagull.push(new Note(lowerWarble, upperWarble, quarterWarble));
-      // seagull.push(new Note(upperWarble, lowerWarble, quarterWarble));
-      // seagull.push(new Note(lowerWarble, upperWarble, quarterWarble));
-      // seagull.push(new Note(upperWarble, lowerWarble, quarterWarble));
-      // seagull.push(new Note(lowerWarble, upperWarble, quarterWarble));
-      // seagull.push(new Note(upperWarble, lowerWarble, quarterWarble));
-      // seagull.push(new Note(lowerWarble, upperWarble, quarterWarble));
-      // seagull.push(new Note(upperWarble, lowerWarble, quarterWarble));
-      // seagull.push(new Note(lowerWarble, upperWarble, quarterWarble));
-      playArray = (soundArray) => {
+    // function ready() {
+      play = () => {
         audioCtx = new AudioContext || window.webkitAudioContext;
         oscillator = audioCtx.createOscillator()
         gainNode = audioCtx.createGain()
@@ -87,36 +22,27 @@
         gainNode.connect(audioCtx.destination)
         oscillator.start(0)
         oscillator.type = "square"
-        elapsedTime = 0 + audioCtx.currentTime;
-        for (note of soundArray) {
-          oscillator.frequency.setValueAtTime(note.frequencyStart, elapsedTime)
-          gainNode.gain.setValueAtTime(1, elapsedTime);
-          gainNode.gain.setValueAtTime(0, elapsedTime + note.duration / 1000);
-          oscillator.frequency.linearRampToValueAtTime(note.frequencyEnd, elapsedTime + note.duration / 1000);
-          elapsedTime += note.duration / 1000;
-        }
+        oscillator.frequency = 440
+        gainNode.gain.setValueAtTime(1, audioCtx.currentTime)
       }
-      document.getElementById("godwit").addEventListener("click", () => {
-        playArray(seagull);
+
+      document.getElementById("play").addEventListener("click", () => {
+        play();
       });
-    }
-    if (document.readyState == 'loading') {
-      document.addEventListener('DOMContentLoaded', ready);
-    } else {
-      ready();
-    }
+
+      document.getElementById("stop").addEventListener("click", () => {
+        gainNode.gain.setValueAtTime(0, audioCtx.currentTime)
+      });
+
+
+    // } // end ready
+    // if (document.readyState == 'loading') {
+    //   document.addEventListener('DOMContentLoaded', ready);
+    // } else {
+    //   ready();
+    // }
   </script>
-
-</head>
-
-<body>
-
-
-  <button id="godwit" class="button">godwit</button><br>
-  <button id="seagull" class="button">seagull2</button><br>
-  <button id="seagull3" class="button">seagull3</button><br>
 
 </body>
 
 </html>
-
