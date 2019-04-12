@@ -15,7 +15,7 @@
   <script>
     // function ready() {
       play = () => {
-        audioCtx = new AudioContext || window.webkitAudioContext;
+        audioCtx = window.webkitAudioContext; //https://bwedgar.github.io/simple-ios-webaudio-webapp/
         oscillator = audioCtx.createOscillator()
         gainNode = audioCtx.createGain()
         oscillator.connect(gainNode)
