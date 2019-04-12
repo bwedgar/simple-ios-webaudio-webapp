@@ -15,6 +15,18 @@
   <script>
     // function ready() {
       play = () => {
+        
+        var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var oscillator = audioCtx.createOscillator();
+    var gainNode = audioCtx.createGain();
+    oscillator.connect(gainNode); 
+    gainNode.connect(audioCtx.destination);
+    oscillator.type = 'sine'; 
+    oscillator.frequency.value = 440;
+
+    gainNode.gain.value = 1;
+        
+        /*
         audioCtx = window.webkitAudioContext; //https://bwedgar.github.io/simple-ios-webaudio-webapp/
         oscillator = audioCtx.createOscillator()
         gainNode = audioCtx.createGain()
@@ -22,8 +34,9 @@
         gainNode.connect(audioCtx.destination)
         oscillator.start(0)
         oscillator.type = "square"
-        oscillator.frequency = 440
+        oscillator.frequency.value = 440
         gainNode.gain.setValueAtTime(1, audioCtx.currentTime)
+        */
       }
 
       document.getElementById("play").addEventListener("click", () => {
